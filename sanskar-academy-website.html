@@ -1,0 +1,2253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venus Media — Digital Growth Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&family=Manrope:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lotus-red: #e8433a;
+    --lotus-pink: #d4246e;
+    --lotus-orange: #f07030;
+    --gold: #c9a84c;
+    --dark: #0d0d0f;
+    --dark2: #141418;
+    --dark3: #1c1c22;
+    --mid: #2a2a33;
+    --text: #e8e6e0;
+    --text-muted: #7a7888;
+    --text-soft: #b8b6c0;
+    --white: #f5f3ee;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Manrope', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom Cursor */
+  .cursor {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: var(--lotus-red);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(232,67,58,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.18s ease, width 0.2s, height 0.2s, opacity 0.2s;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.35;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 60px;
+    background: linear-gradient(to bottom, rgba(13,13,15,0.95) 0%, transparent 100%);
+    backdrop-filter: blur(2px);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+  }
+
+  .nav-logo-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .nav-logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-logo-text span {
+    color: var(--lotus-red);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--lotus-red); }
+
+  .nav-cta {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dark);
+    background: linear-gradient(135deg, var(--lotus-orange), var(--lotus-red), var(--lotus-pink));
+    padding: 10px 24px;
+    text-decoration: none;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: opacity 0.3s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    padding: 140px 60px 80px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 75% 40%, rgba(232,67,58,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 50% at 20% 70%, rgba(212,36,110,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 80% at 50% 50%, rgba(13,13,15,1) 40%, rgba(13,13,15,0) 100%);
+  }
+
+  .hero-lotus {
+    position: absolute;
+    right: -80px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 620px;
+    height: 620px;
+    opacity: 0.07;
+    animation: slowSpin 40s linear infinite;
+  }
+
+  @keyframes slowSpin {
+    from { transform: translateY(-50%) rotate(0deg); }
+    to { transform: translateY(-50%) rotate(360deg); }
+  }
+
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--lotus-red);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s forwards;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--lotus-red);
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(64px, 8vw, 120px);
+    font-weight: 300;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    max-width: 800px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.5s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    background: linear-gradient(135deg, var(--lotus-orange), var(--lotus-red), var(--lotus-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-family: 'Manrope', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--text-soft);
+    max-width: 480px;
+    line-height: 1.7;
+    margin-top: 32px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.7s forwards;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 60px;
+    margin-top: 64px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.9s forwards;
+  }
+
+  .stat-item {}
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 600;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--lotus-orange), var(--lotus-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 60px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    opacity: 0;
+    animation: fadeUp 0.9s 1.2s forwards;
+  }
+
+  .scroll-line {
+    width: 60px;
+    height: 1px;
+    background: var(--text-muted);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--lotus-red);
+    animation: scrollAnim 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollAnim {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION COMMON */
+  section { padding: 120px 60px; position: relative; }
+
+  .section-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--lotus-red);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    width: 30px;
+    height: 1px;
+    background: var(--lotus-red);
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 5vw, 72px);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--lotus-red);
+  }
+
+  /* ABOUT / WHAT WE DO */
+  .about {
+    background: var(--dark2);
+    border-top: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    margin-top: 60px;
+  }
+
+  .about-text p {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--text-soft);
+    margin-bottom: 20px;
+  }
+
+  .about-text p strong {
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .service-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .service-card {
+    background: var(--dark3);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--lotus-orange), var(--lotus-pink));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.12); }
+
+  .service-icon {
+    font-size: 28px;
+    margin-bottom: 14px;
+  }
+
+  .service-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .service-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* CREATORS SECTION */
+  .creators { background: var(--dark); }
+
+  .creators-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: end;
+    margin-bottom: 64px;
+  }
+
+  .creators-desc {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--text-soft);
+    margin-top: 24px;
+  }
+
+  .creators-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .creator-card {
+    background: var(--dark3);
+    border: 1px solid rgba(255,255,255,0.06);
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.4s, border-color 0.4s;
+  }
+
+  .creator-card:hover { transform: translateY(-8px); border-color: rgba(232,67,58,0.3); }
+
+  .creator-banner {
+    height: 140px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .creator-card:nth-child(1) .creator-banner {
+    background: linear-gradient(135deg, #1a0a2e, #3d1a6e, #7b2d8b);
+  }
+
+  .creator-card:nth-child(2) .creator-banner {
+    background: linear-gradient(135deg, #0a1628, #1a3a5c, #2d6a9f);
+  }
+
+  .creator-card:nth-child(3) .creator-banner {
+    background: linear-gradient(135deg, #1a1a0a, #4a3a10, #8b6914);
+  }
+
+  .creator-banner-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.3;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(255,255,255,0.05) 10px,
+      rgba(255,255,255,0.05) 11px
+    );
+  }
+
+  .creator-platform-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 6px 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #ff4444;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .creator-platform-badge::before {
+    content: '▶';
+    font-size: 8px;
+  }
+
+  .creator-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 3px solid var(--dark3);
+    background: linear-gradient(135deg, var(--lotus-orange), var(--lotus-pink));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: white;
+    position: absolute;
+    bottom: -30px;
+    left: 24px;
+  }
+
+  .creator-content {
+    padding: 44px 24px 28px;
+  }
+
+  .creator-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .creator-handle {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--lotus-red);
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+  }
+
+  .creator-bio {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+
+  .creator-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .c-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--lotus-orange), var(--lotus-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .c-stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 3px;
+  }
+
+  .creator-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--lotus-red);
+    text-decoration: none;
+    transition: gap 0.3s;
+  }
+
+  .creator-cta:hover { gap: 14px; }
+
+  /* BRANDS SECTION */
+  .brands { background: var(--dark2); }
+
+  .brands-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+  }
+
+  .brand-card {
+    background: var(--dark);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s, border-color 0.4s;
+  }
+
+  .brand-card:hover { transform: translateY(-6px); border-color: rgba(232,67,58,0.25); }
+
+  .brand-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--lotus-orange), var(--lotus-red), var(--lotus-pink));
+    transform: scaleX(0);
+    transition: transform 0.4s;
+  }
+
+  .brand-card:hover::after { transform: scaleX(1); }
+
+  /* SVG LOGOS */
+  .logo-container {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+
+  /* SANSKAR ACADEMY LOGO */
+  .logo-sanskar svg { width: 200px; }
+
+  /* AMERVAN WAFFLE LOGO */
+  .logo-amervan svg { width: 160px; }
+
+  /* DHOLPUR LOGO */
+  .logo-dholpur svg { width: 170px; }
+
+  .brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--white);
+  }
+
+  .brand-category {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--lotus-red);
+    margin-bottom: 16px;
+  }
+
+  .brand-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .brand-services {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .brand-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 5px 10px;
+  }
+
+  /* LOGO REEL FILM STRIP */
+  .logo-reel-section {
+    background: #0a0a0c;
+    padding: 80px 0 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .logo-reel-header { padding: 0 60px 60px; }
+  .film-strip-border {
+    background: #1a1a1e;
+    padding: 10px 0;
+    border-top: 2px solid #2a2a30;
+    border-bottom: 2px solid #2a2a30;
+  }
+  .film-holes {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 20px;
+  }
+  .film-holes span {
+    width: 28px;
+    height: 20px;
+    background: #0a0a0c;
+    border-radius: 3px;
+    border: 1px solid #333;
+    flex-shrink: 0;
+  }
+  .logo-reel-track-wrapper {
+    position: relative;
+    background: #111114;
+    padding: 30px 0;
+    border-top: 1px solid #222;
+    border-bottom: 1px solid #222;
+  }
+  .logo-reel-fade {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 120px;
+    z-index: 10;
+    pointer-events: none;
+  }
+  .logo-reel-fade.left { left: 0; background: linear-gradient(to right, #111114 0%, transparent 100%); }
+  .logo-reel-fade.right { right: 0; background: linear-gradient(to left, #111114 0%, transparent 100%); }
+  .logo-reel-track { overflow: hidden; }
+  .logo-reel-row {
+    display: flex;
+    gap: 0;
+    width: max-content;
+    animation: reelScroll 38s linear infinite;
+  }
+  .logo-reel-row:hover { animation-play-state: paused; }
+  @keyframes reelScroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .reel-logo-card {
+    width: 220px;
+    height: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 20px 10px;
+    border-right: 1px solid #1e1e24;
+    flex-shrink: 0;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.3s;
+    gap: 8px;
+  }
+  .reel-logo-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(232,67,58,0.06), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .reel-logo-card:hover::before { opacity: 1; }
+  .reel-logo-card:hover { background: rgba(255,255,255,0.02); }
+  .reel-logo-card svg {
+    width: 160px;
+    height: 80px;
+    filter: saturate(0.65) brightness(0.8);
+    transition: filter 0.3s, transform 0.3s;
+  }
+  .reel-logo-card:hover svg { filter: saturate(1) brightness(1.15); transform: scale(1.06); }
+  .reel-logo-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #3a3a44;
+    transition: color 0.3s;
+    text-align: center;
+  }
+  .reel-logo-card:hover .reel-logo-name { color: var(--text-muted); }
+
+  /* PROCESS SECTION */
+  .process { background: var(--dark); }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 64px;
+    position: relative;
+  }
+
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 38px;
+    left: 12%;
+    right: 12%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--lotus-orange), var(--lotus-pink));
+    opacity: 0.4;
+  }
+
+  .process-step {
+    padding: 0 24px;
+    text-align: center;
+  }
+
+  .step-num {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background: var(--dark3);
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--lotus-red);
+    position: relative;
+    z-index: 1;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .process-step:hover .step-num {
+    background: var(--lotus-red);
+    color: white;
+    border-color: var(--lotus-red);
+  }
+
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* TESTIMONIALS / RESULTS */
+  .results { background: var(--dark2); }
+
+  .results-marquee-wrapper {
+    overflow: hidden;
+    margin-top: 60px;
+    padding: 20px 0;
+  }
+
+  .results-marquee {
+    display: flex;
+    gap: 24px;
+    animation: marquee 30s linear infinite;
+    width: max-content;
+  }
+
+  .results-marquee:hover { animation-play-state: paused; }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .result-pill {
+    background: var(--dark3);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 20px 32px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+  }
+
+  .result-pill-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--lotus-orange), var(--lotus-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .result-pill-text {
+    font-size: 13px;
+    color: var(--text-muted);
+    max-width: 160px;
+    line-height: 1.5;
+  }
+
+  /* WHY US */
+  .why {
+    background: var(--dark);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .why::before {
+    content: '';
+    position: absolute;
+    right: -200px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(232,67,58,0.08) 0%, transparent 70%);
+  }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    margin-top: 60px;
+  }
+
+  .why-features {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .why-feature {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 24px;
+    background: var(--dark3);
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: border-color 0.3s;
+  }
+
+  .why-feature:hover { border-color: rgba(232,67,58,0.2); }
+
+  .why-feature-icon {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, rgba(232,67,58,0.2), rgba(212,36,110,0.2));
+    border: 1px solid rgba(232,67,58,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .why-feature-text h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .why-feature-text p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .why-visual {
+    position: relative;
+  }
+
+  .why-big-stat {
+    text-align: center;
+    padding: 60px 40px;
+    background: var(--dark3);
+    border: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .why-big-stat::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(232,67,58,0.06) 0%, transparent 70%);
+  }
+
+  .why-big-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 100px;
+    font-weight: 600;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--lotus-orange), var(--lotus-red), var(--lotus-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+  }
+
+  .why-big-label {
+    font-family: 'Manrope', sans-serif;
+    font-size: 16px;
+    color: var(--text-soft);
+    margin-top: 12px;
+    position: relative;
+  }
+
+  .why-secondary-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .why-sec-stat {
+    padding: 24px;
+    background: var(--dark3);
+    border: 1px solid rgba(255,255,255,0.06);
+    text-align: center;
+  }
+
+  .why-sec-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--lotus-orange), var(--lotus-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .why-sec-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    background: var(--dark2);
+    text-align: center;
+    padding: 120px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 50% 50%, rgba(232,67,58,0.1) 0%, transparent 70%);
+  }
+
+  .cta-section .section-title {
+    max-width: 700px;
+    margin: 0 auto 16px;
+    position: relative;
+  }
+
+  .cta-section .section-eyebrow {
+    justify-content: center;
+  }
+
+  .cta-section .section-eyebrow::before { display: none; }
+
+  .cta-desc {
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 480px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+    position: relative;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    position: relative;
+  }
+
+  .btn-primary {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dark);
+    background: linear-gradient(135deg, var(--lotus-orange), var(--lotus-red), var(--lotus-pink));
+    padding: 16px 40px;
+    text-decoration: none;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: opacity 0.3s, transform 0.3s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { opacity: 0.85; transform: translateY(-2px); }
+
+  .btn-secondary {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 16px 40px;
+    text-decoration: none;
+    transition: border-color 0.3s, color 0.3s;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover { border-color: var(--lotus-red); color: var(--lotus-red); }
+
+  .btn-whatsapp {
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .btn-call {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .cta-contact-note {
+    margin-top: 32px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    position: relative;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 60px 60px 40px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 48px;
+  }
+
+  .footer-brand p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-top: 16px;
+    max-width: 280px;
+  }
+
+  .footer-col h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-col ul li a {
+    font-size: 14px;
+    color: var(--text-soft);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-col ul li a:hover { color: var(--lotus-red); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .footer-bottom p {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+
+  .footer-bottom p span {
+    color: var(--lotus-red);
+  }
+
+  /* FLOATING ACCENT */
+  .float-accent {
+    position: absolute;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--lotus-red), transparent);
+    animation: floatAccent 3s ease-in-out infinite;
+  }
+
+  @keyframes floatAccent {
+    0%, 100% { transform: scaleY(1); opacity: 0.4; }
+    50% { transform: scaleY(1.4); opacity: 0.8; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    nav { padding: 20px 30px; }
+    .nav-links { display: none; }
+    section { padding: 80px 30px; }
+    .hero { padding: 120px 30px 60px; }
+    .about-grid, .creators-intro, .why-grid { grid-template-columns: 1fr; gap: 40px; }
+    .creators-grid, .brands-grid { grid-template-columns: 1fr 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .process-steps::before { display: none; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .hero-stats { gap: 30px; }
+    .hero-lotus { width: 300px; height: 300px; opacity: 0.04; }
+  }
+
+  @media (max-width: 640px) {
+    .creators-grid, .brands-grid { grid-template-columns: 1fr; }
+    .service-cards { grid-template-columns: 1fr; }
+    .why-secondary-stats { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+    .hero-stats { flex-wrap: wrap; gap: 24px; }
+    .cta-buttons { flex-direction: column; align-items: center; }
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.hidden {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg class="nav-logo-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Simplified lotus mark -->
+      <ellipse cx="22" cy="30" rx="14" ry="6" fill="url(#lotusGrad1)" opacity="0.7"/>
+      <path d="M22 28 C16 20 12 12 22 8 C32 12 28 20 22 28Z" fill="url(#lotusGrad2)"/>
+      <path d="M22 28 C14 22 8 16 14 10 C18 14 20 21 22 28Z" fill="url(#lotusGrad1)" opacity="0.8"/>
+      <path d="M22 28 C30 22 36 16 30 10 C26 14 24 21 22 28Z" fill="url(#lotusGrad1)" opacity="0.8"/>
+      <defs>
+        <linearGradient id="lotusGrad1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#f07030"/>
+          <stop offset="100%" stop-color="#d4246e"/>
+        </linearGradient>
+        <linearGradient id="lotusGrad2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f07030"/>
+          <stop offset="100%" stop-color="#d4246e"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div class="nav-logo-text">Venus <span>Media</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#creators">Creators</a></li>
+    <li><a href="#brands">Brands</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#results">Results</a></li>
+  </ul>
+  <a href="https://wa.me/919171015581?text=Hi%20Venus%20Media!%20I%27d%20like%20to%20work%20with%20you." target="_blank" class="nav-cta">Work With Us</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+
+  <!-- BG Lotus SVG -->
+  <svg class="hero-lotus" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="200" cy="270" rx="140" ry="50" fill="url(#hLotus3)" opacity="0.6"/>
+    <path d="M200 260 C160 200 140 130 200 80 C260 130 240 200 200 260Z" fill="url(#hLotus1)"/>
+    <path d="M200 260 C140 210 100 140 140 90 C160 130 180 200 200 260Z" fill="url(#hLotus2)" opacity="0.8"/>
+    <path d="M200 260 C260 210 300 140 260 90 C240 130 220 200 200 260Z" fill="url(#hLotus2)" opacity="0.8"/>
+    <path d="M200 260 C120 220 70 150 100 100 C140 140 170 205 200 260Z" fill="url(#hLotus2)" opacity="0.6"/>
+    <path d="M200 260 C280 220 330 150 300 100 C260 140 230 205 200 260Z" fill="url(#hLotus2)" opacity="0.6"/>
+    <defs>
+      <linearGradient id="hLotus1" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#f07030"/>
+        <stop offset="100%" stop-color="#d4246e"/>
+      </linearGradient>
+      <linearGradient id="hLotus2" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#e8433a"/>
+        <stop offset="100%" stop-color="#d4246e"/>
+      </linearGradient>
+      <linearGradient id="hLotus3" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#d4246e"/>
+        <stop offset="100%" stop-color="#e8433a"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <div class="hero-tag">Digital Growth Studio</div>
+
+  <h1 class="hero-title">
+    We Build<br>
+    <em>Creators</em> &amp;<br>
+    Elevate Brands
+  </h1>
+
+  <p class="hero-subtitle">
+    From managing India's top YouTube creators to crafting digital identities for brands — Venus Media is where talent meets strategy.
+  </p>
+
+    <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">100+</div>
+      <div class="stat-label">Creators Managed</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">250+</div>
+      <div class="stat-label">Campaigns Served</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Growth Potential</div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll to explore
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-eyebrow">Who We Are</div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <h2 class="section-title">Full-Stack <em>Digital</em> Management</h2>
+      <p style="margin-top: 32px;">
+        At Venus Media, we operate at the intersection of <strong>content strategy, brand building, and digital growth.</strong> We manage the business side of India's top YouTube creators — so they can focus entirely on creating.
+      </p>
+      <p>
+        Beyond creator management, we serve as a <strong>complete digital partner</strong> for brands — handling content solutions, website design, logo creation, and social media strategy that drives real results.
+      </p>
+      <p>
+        Our philosophy is simple: <strong>every creator and brand has a unique story.</strong> We find that story and amplify it to the right audience at the right time.
+      </p>
+    </div>
+    <div class="service-cards reveal">
+      <div class="service-card">
+        <div class="service-icon">📺</div>
+        <h3>Creator Management</h3>
+        <p>End-to-end business management for YouTube creators — strategy, partnerships, monetization & growth.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🎯</div>
+        <h3>Content Strategy</h3>
+        <p>Data-driven content solutions that position brands and creators for algorithmic success.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🌐</div>
+        <h3>Web Design</h3>
+        <p>World-class website design that converts visitors into loyal customers and fans.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✦</div>
+        <h3>Brand Identity</h3>
+        <p>Distinctive logos and visual identities that make brands impossible to forget.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREATORS -->
+<section class="creators" id="creators">
+  <div class="creators-intro">
+    <div>
+      <div class="section-eyebrow reveal">Creator Roster</div>
+      <h2 class="section-title reveal">Talent We <em>Champion</em></h2>
+    </div>
+    <p class="creators-desc reveal">
+      We manage the complete business ecosystem of India's fastest-growing YouTube channels — handling brand deals, monetization strategy, audience growth, and everything in between.
+    </p>
+  </div>
+
+  <div class="creators-grid">
+
+    <!-- Creator 1: Artists Hintu Mourya -->
+    <div class="creator-card reveal">
+      <div class="creator-banner">
+        <div class="creator-banner-pattern"></div>
+        <div class="creator-platform-badge">YouTube</div>
+        <div class="creator-avatar">H</div>
+      </div>
+      <div class="creator-content">
+        <div class="creator-name">Hintu Mourya</div>
+        <div class="creator-handle">@artistshintumourya</div>
+        <p class="creator-bio">A talented Indian artist & creator bringing authentic stories and visual art to the digital world. We manage his channel growth, brand collaborations, and digital business strategy.</p>
+        <div class="creator-stats">
+          <div>
+            <div class="c-stat-num">📈</div>
+            <div class="c-stat-label">Channel Scaling</div>
+          </div>
+          <div>
+            <div class="c-stat-num">🤝</div>
+            <div class="c-stat-label">Brand Deals</div>
+          </div>
+        </div>
+        <a href="https://youtube.com/@artistshintumourya" target="_blank" class="creator-cta">
+          View Channel →
+        </a>
+      </div>
+    </div>
+
+    <!-- Creator 2: Akash Patel -->
+    <div class="creator-card reveal">
+      <div class="creator-banner">
+        <div class="creator-banner-pattern"></div>
+        <div class="creator-platform-badge">YouTube</div>
+        <div class="creator-avatar">A</div>
+      </div>
+      <div class="creator-content">
+        <div class="creator-name">Akash Patel</div>
+        <div class="creator-handle">@akashpatel0712</div>
+        <p class="creator-bio">Dynamic content creator with a growing community around lifestyle, entertainment, and cultural commentary. We've helped scale his reach through strategic content planning and monetization.</p>
+        <div class="creator-stats">
+          <div>
+            <div class="c-stat-num">📈</div>
+            <div class="c-stat-label">Channel Scaling</div>
+          </div>
+          <div>
+            <div class="c-stat-num">💰</div>
+            <div class="c-stat-label">Monetization</div>
+          </div>
+        </div>
+        <a href="https://youtube.com/@akashpatel0712" target="_blank" class="creator-cta">
+          View Channel →
+        </a>
+      </div>
+    </div>
+
+    <!-- Creator 3: Mehak Lalwani -->
+    <div class="creator-card reveal">
+      <div class="creator-banner">
+        <div class="creator-banner-pattern"></div>
+        <div class="creator-platform-badge">YouTube</div>
+        <div class="creator-avatar">M</div>
+      </div>
+      <div class="creator-content">
+        <div class="creator-name">Mehak Lalwani</div>
+        <div class="creator-handle">@mehaklalwaniii</div>
+        <p class="creator-bio">A rising lifestyle and beauty creator building an authentic connection with her audience. Under our management, her channel has seen remarkable growth in both reach and revenue opportunities.</p>
+        <div class="creator-stats">
+          <div>
+            <div class="c-stat-num">📈</div>
+            <div class="c-stat-label">Channel Scaling</div>
+          </div>
+          <div>
+            <div class="c-stat-num">✨</div>
+            <div class="c-stat-label">Brand Identity</div>
+          </div>
+        </div>
+        <a href="https://youtube.com/@mehaklalwaniii" target="_blank" class="creator-cta">
+          View Channel →
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- BRANDS -->
+<section class="brands" id="brands">
+  <div class="section-eyebrow reveal">Brand Portfolio</div>
+  <h2 class="section-title reveal">Brands We've <em>Elevated</em></h2>
+
+  <div class="brands-grid">
+
+    <!-- Sanskar Academy -->
+    <div class="brand-card reveal">
+      <div class="logo-container logo-sanskar">
+        <svg viewBox="0 0 200 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Lotus icon small -->
+          <g transform="translate(20, 5)">
+            <ellipse cx="25" cy="58" rx="22" ry="8" fill="url(#saGrad3)" opacity="0.7"/>
+            <path d="M25 55 C17 42 14 28 25 20 C36 28 33 42 25 55Z" fill="url(#saGrad1)"/>
+            <path d="M25 55 C15 46 10 32 16 24 C20 32 22 44 25 55Z" fill="url(#saGrad2)" opacity="0.8"/>
+            <path d="M25 55 C35 46 40 32 34 24 C30 32 28 44 25 55Z" fill="url(#saGrad2)" opacity="0.8"/>
+            <path d="M25 55 C9 47 3 30 10 20 C15 29 20 42 25 55Z" fill="url(#saGrad2)" opacity="0.5"/>
+            <path d="M25 55 C41 47 47 30 40 20 C35 29 30 42 25 55Z" fill="url(#saGrad2)" opacity="0.5"/>
+          </g>
+          <!-- Text -->
+          <text x="65" y="40" font-family="Georgia, serif" font-size="14" font-weight="bold" fill="#e8433a" letter-spacing="1">SANSKAR</text>
+          <text x="65" y="58" font-family="Georgia, serif" font-size="11" fill="#888" letter-spacing="3">ACADEMY</text>
+          <!-- Devanagari-style line -->
+          <line x1="65" y1="44" x2="178" y2="44" stroke="#555" stroke-width="0.5"/>
+          <defs>
+            <linearGradient id="saGrad1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f07030"/><stop offset="100%" stop-color="#d4246e"/></linearGradient>
+            <linearGradient id="saGrad2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e8433a"/><stop offset="100%" stop-color="#d4246e"/></linearGradient>
+            <linearGradient id="saGrad3" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d4246e"/><stop offset="100%" stop-color="#e8433a"/></linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="brand-name">Sanskar Academy</div>
+      <div class="brand-category">Education & Digital Learning</div>
+      <p class="brand-desc">A premier educational institution we've built a complete digital presence for — including website architecture, brand identity system, and content strategy to attract students online.</p>
+      <div class="brand-services">
+        <span class="brand-tag">Logo Design</span>
+        <span class="brand-tag">Web Design</span>
+        <span class="brand-tag">Content Strategy</span>
+        <span class="brand-tag">Digital Marketing</span>
+      </div>
+    </div>
+
+    <!-- Amervan Waffle -->
+    <div class="brand-card reveal">
+      <div class="logo-container logo-amervan">
+        <svg viewBox="0 0 180 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Waffle grid icon -->
+          <g transform="translate(8,10)">
+            <!-- Waffle squares -->
+            <rect x="0" y="0" width="14" height="14" rx="2" fill="url(#awGrad1)"/>
+            <rect x="17" y="0" width="14" height="14" rx="2" fill="url(#awGrad1)" opacity="0.8"/>
+            <rect x="34" y="0" width="14" height="14" rx="2" fill="url(#awGrad1)" opacity="0.6"/>
+            <rect x="0" y="17" width="14" height="14" rx="2" fill="url(#awGrad1)" opacity="0.8"/>
+            <rect x="17" y="17" width="14" height="14" rx="2" fill="url(#awGrad2)"/>
+            <rect x="34" y="17" width="14" height="14" rx="2" fill="url(#awGrad1)" opacity="0.8"/>
+            <rect x="0" y="34" width="14" height="14" rx="2" fill="url(#awGrad1)" opacity="0.6"/>
+            <rect x="17" y="34" width="14" height="14" rx="2" fill="url(#awGrad1)" opacity="0.8"/>
+            <rect x="34" y="34" width="14" height="14" rx="2" fill="url(#awGrad1)"/>
+          </g>
+          <!-- Text -->
+          <text x="64" y="32" font-family="Georgia, serif" font-size="13" font-weight="bold" fill="#f5c842" letter-spacing="0.5">AMERVAN</text>
+          <text x="64" y="52" font-family="Arial, sans-serif" font-size="9" fill="#c8a030" letter-spacing="3">WAFFLE</text>
+          <line x1="64" y1="57" x2="170" y2="57" stroke="#f5c842" stroke-width="0.5" opacity="0.5"/>
+          <text x="64" y="68" font-family="Arial, sans-serif" font-size="7" fill="#888" letter-spacing="2">HOUSE</text>
+          <defs>
+            <linearGradient id="awGrad1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f5c842"/><stop offset="100%" stop-color="#c8821a"/></linearGradient>
+            <linearGradient id="awGrad2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#f5c842"/></linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="brand-name">Amervan Waffle</div>
+      <div class="brand-category">Food & Beverage Brand</div>
+      <p class="brand-desc">A delicious waffle brand we transformed with a compelling digital identity — designing a mouth-watering logo, brand-consistent website, and appetizing social media content strategy.</p>
+      <div class="brand-services">
+        <span class="brand-tag">Logo Design</span>
+        <span class="brand-tag">Web Design</span>
+        <span class="brand-tag">Social Media</span>
+        <span class="brand-tag">Brand Identity</span>
+      </div>
+    </div>
+
+    <!-- Dholpur -->
+    <div class="brand-card reveal">
+      <div class="logo-container logo-dholpur">
+        <svg viewBox="0 0 180 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Drum / heritage icon -->
+          <g transform="translate(8, 8)">
+            <!-- Stylized drum -->
+            <ellipse cx="26" cy="15" rx="22" ry="8" fill="url(#dhGrad1)" opacity="0.9"/>
+            <rect x="4" y="15" width="44" height="28" fill="url(#dhGrad2)"/>
+            <ellipse cx="26" cy="43" rx="22" ry="8" fill="url(#dhGrad1)"/>
+            <!-- Drum strings -->
+            <line x1="4" y1="17" x2="4" y2="41" stroke="#c9a84c" stroke-width="1.5"/>
+            <line x1="48" y1="17" x2="48" y2="41" stroke="#c9a84c" stroke-width="1.5"/>
+            <!-- Decorative lines on drum -->
+            <line x1="4" y1="29" x2="48" y2="29" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+          </g>
+          <!-- Text -->
+          <text x="70" y="35" font-family="Georgia, serif" font-size="16" font-weight="bold" fill="#c9a84c" letter-spacing="1">DHOLPUR</text>
+          <line x1="70" y1="43" x2="170" y2="43" stroke="#c9a84c" stroke-width="0.5" opacity="0.5"/>
+          <text x="70" y="58" font-family="Arial, sans-serif" font-size="7" fill="#888" letter-spacing="2.5">HERITAGE · CULTURE</text>
+          <defs>
+            <linearGradient id="dhGrad1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#c9a84c"/><stop offset="100%" stop-color="#8b6914"/></linearGradient>
+            <linearGradient id="dhGrad2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8b6914"/><stop offset="100%" stop-color="#5a4010"/></linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="brand-name">Dholpur</div>
+      <div class="brand-category">Heritage & Culture Brand</div>
+      <p class="brand-desc">A heritage brand celebrating Indian culture and tradition. We crafted a dignified brand identity, designed their web presence, and developed a content strategy rooted in cultural authenticity.</p>
+      <div class="brand-services">
+        <span class="brand-tag">Logo Design</span>
+        <span class="brand-tag">Web Design</span>
+        <span class="brand-tag">Brand Strategy</span>
+        <span class="brand-tag">Content Creation</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- LOGO REEL -->
+<section class="logo-reel-section">
+  <div class="logo-reel-header reveal">
+    <div class="section-eyebrow" style="justify-content:center;"><span style="width:30px;height:1px;background:var(--lotus-red);display:inline-block;margin-right:14px;vertical-align:middle;"></span>Logo Design Portfolio</div>
+    <h2 class="section-title" style="text-align:center;margin-top:12px;">Brands We've <em>Crafted</em></h2>
+    <p style="text-align:center;color:var(--text-muted);font-size:15px;margin-top:14px;max-width:500px;margin-left:auto;margin-right:auto;">World-class identities designed for businesses across industries — each one distinct, memorable, and built to last.</p>
+  </div>
+
+  <!-- Film strip top border -->
+  <div class="film-strip-border top">
+    <div class="film-holes">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <div class="logo-reel-track-wrapper">
+    <div class="logo-reel-fade left"></div>
+    <div class="logo-reel-fade right"></div>
+
+    <!-- ROW 1 — left to right -->
+    <div class="logo-reel-track">
+      <div class="logo-reel-row row1">
+
+        <!-- 1. Sanskar Academy -->
+        <div class="reel-logo-card">
+          <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(12,8)">
+              <ellipse cx="25" cy="58" rx="22" ry="8" fill="url(#rl_sa3)" opacity="0.7"/>
+              <path d="M25 55 C17 42 14 28 25 20 C36 28 33 42 25 55Z" fill="url(#rl_sa1)"/>
+              <path d="M25 55 C15 46 10 32 16 24 C20 32 22 44 25 55Z" fill="url(#rl_sa2)" opacity="0.8"/>
+              <path d="M25 55 C35 46 40 32 34 24 C30 32 28 44 25 55Z" fill="url(#rl_sa2)" opacity="0.8"/>
+              <path d="M25 55 C9 47 3 30 10 20 C15 29 20 42 25 55Z" fill="url(#rl_sa2)" opacity="0.5"/>
+              <path d="M25 55 C41 47 47 30 40 20 C35 29 30 42 25 55Z" fill="url(#rl_sa2)" opacity="0.5"/>
+            </g>
+            <text x="62" y="44" font-family="Georgia,serif" font-size="13" font-weight="bold" fill="#e8433a" letter-spacing="1">SANSKAR</text>
+            <line x1="62" y1="48" x2="168" y2="48" stroke="#555" stroke-width="0.5"/>
+            <text x="62" y="62" font-family="Georgia,serif" font-size="10" fill="#888" letter-spacing="3">ACADEMY</text>
+            <defs>
+              <linearGradient id="rl_sa1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f07030"/><stop offset="100%" stop-color="#d4246e"/></linearGradient>
+              <linearGradient id="rl_sa2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e8433a"/><stop offset="100%" stop-color="#d4246e"/></linearGradient>
+              <linearGradient id="rl_sa3" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d4246e"/><stop offset="100%" stop-color="#e8433a"/></linearGradient>
+            </defs>
+          </svg>
+          <span class="reel-logo-name">Sanskar Academy</span>
+        </div>
+
+        <!-- 2. Amervan Waffle -->
+        <div class="reel-logo-card">
+          <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(10,12)">
+              <rect x="0" y="0" width="13" height="13" rx="2" fill="url(#rl_aw1)"/>
+              <rect x="16" y="0" width="13" height="13" rx="2" fill="url(#rl_aw1)" opacity="0.8"/>
+              <rect x="32" y="0" width="13" height="13" rx="2" fill="url(#rl_aw1)" opacity="0.6"/>
+              <rect x="0" y="16" width="13" height="13" rx="2" fill="url(#rl_aw1)" opacity="0.8"/>
+              <rect x="16" y="16" width="13" height="13" rx="2" fill="#fff" opacity="0.9"/>
+              <rect x="32" y="16" width="13" height="13" rx="2" fill="url(#rl_aw1)" opacity="0.8"/>
+              <rect x="0" y="32" width="13" height="13" rx="2" fill="url(#rl_aw1)" opacity="0.6"/>
+              <rect x="16" y="32" width="13" height="13" rx="2" fill="url(#rl_aw1)" opacity="0.8"/>
+              <rect x="32" y="32" width="13" height="13" rx="2" fill="url(#rl_aw1)"/>
+            </g>
+            <text x="62" y="38" font-family="Georgia,serif" font-size="12" font-weight="bold" fill="#f5c842" letter-spacing="0.5">AMERVAN</text>
+            <line x1="62" y1="44" x2="168" y2="44" stroke="#f5c842" stroke-width="0.4" opacity="0.5"/>
+            <text x="62" y="58" font-family="Arial,sans-serif" font-size="9" fill="#c8a030" letter-spacing="3">WAFFLE</text>
+            <text x="62" y="70" font-family="Arial,sans-serif" font-size="7" fill="#666" letter-spacing="2">HOUSE</text>
+            <defs>
+              <linearGradient id="rl_aw1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f5c842"/><stop offset="100%" stop-color="#c8821a"/></linearGradient>
+            </defs>
+          </svg>
+          <span class="reel-logo-name">Amervan Waffle</span>
+        </div>
+
+        <!-- 3. Dholpur Heritage -->
+        <div class="reel-logo-card">
+          <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(8,10)">
+              <ellipse cx="26" cy="14" rx="22" ry="7" fill="url(#rl_dh1)" opacity="0.9"/>
+              <rect x="4" y="14" width="44" height="26" fill="url(#rl_dh2)"/>
+              <ellipse cx="26" cy="40" rx="22" ry="7" fill="url(#rl_dh1)"/>
+              <line x1="4" y1="16" x2="4" y2="38" stroke="#c9a84c" stroke-width="1.5"/>
+              <line x1="48" y1="16" x2="48" y2="38" stroke="#c9a84c" stroke-width="1.5"/>
+              <line x1="4" y1="27" x2="48" y2="27" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            </g>
+            <text x="64" y="38" font-family="Georgia,serif" font-size="14" font-weight="bold" fill="#c9a84c" letter-spacing="1">DHOLPUR</text>
+            <line x1="64" y1="44" x2="170" y2="44" stroke="#c9a84c" stroke-width="0.4" opacity="0.5"/>
+            <text x="64" y="58" font-family="Arial,sans-serif" font-size="7" fill="#888" letter-spacing="2">HERITAGE · CULTURE</text>
+            <defs>
+              <linearGradient id="rl_dh1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#c9a84c"/><stop offset="100%" stop-color="#8b6914"/></linearGradient>
+              <linearGradient id="rl_dh2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8b6914"/><stop offset="100%" stop-color="#5a4010"/></linearGradient>
+            </defs>
+          </svg>
+          <span class="reel-logo-name">Dholpur</span>
+        </div>
+
+        <!-- 4. Nova Fitness -->
+        <div class="reel-logo-card">
+          <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Lightning bolt -->
+            <polygon points="50,15 38,52 48,52 36,85 62,42 50,42" fill="url(#rl_nf1)"/>
+            <text x="72" y="42" font-family="Arial,sans-serif" font-size="15" font-weight="900" fill="#00e5ff" letter-spacing="-0.5">NOVA</text>
+            <text x="72" y="60" font-family="Arial,sans-serif" font-size="9" fill="#888" letter-spacing="4">FITNESS</text>
+            <line x1="72" y1="45" x2="162" y2="45" stroke="#00e5ff" stroke-width="0.5" opacity="0.4"/>
+            <defs>
+              <linearGradient id="rl_nf1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00e5ff"/><stop offset="100%" stop-color="#0072ff"/></linearGradient>
+            </defs>
+          </svg>
+          <span class="reel-logo-name">Nova Fitness</span>
+        </div>
+
+        <!-- 5. Rasa Kitchen -->
+        <div class="reel-logo-card">
+          <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Spoon & fork icon -->
+            <line x1="28" y1="15" x2="28" y2="85" stroke="url(#rl_rk1)" stroke-width="3" stroke-linecap="round"/>
+            <ellipse cx="28" cy="28" rx="8" ry="12" fill="none" stroke="url(#rl_rk1)" stroke-width="2"/>
+            <line x1="44" y1="15" x2="44" y2="85" stroke="url(#rl_rk1)" stroke-width="3" stroke-linecap="round"/>
+            <line x1="40" y1="15" x2="40" y2="40" stroke="url(#rl_rk1)" stroke-width="1.5"/>
+            <line x1="48" y1="15" x2="48" y2="40" stroke="url(#rl_rk1)" stroke-width="1.5"/>
+            <line x1="40" y1="40" x2="48" y2="40" stroke="url(#rl_rk1)" stroke-width="1.5"/>
+            <text x="62" y="42" font-family="Georgia,serif" font-size="14" font-style="italic" fill="#e8a87c" letter-spacing="1">Rasa</text>
+            <text x="62" y="60" font-family="Arial,sans-serif" font-size="8" fill="#888" letter-spacing="3">KITCHEN</text>
+            <line x1="62" y1="46" x2="158" y2="46" stroke="#e8a87c" stroke-width="0.4" opacity="0.5"/>
+            <defs>
+              <linearGradient id="rl_rk1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e8a87c"/><stop offset="100%" stop-color="#c8623a"/></linearGradient>
+            </defs>
+          </svg>
+          <span class="reel-logo-name">Rasa Kitchen</span>
+        </div>
+
+        <!-- 6. Zenith Realty -->
+        <div class="reel-logo-card">
+          <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Building/skyline icon -->
+            <rect x="10" y="55" width="16" height="30" fill="url(#rl_zr1)"/>
+            <rect x="28" y="38" width="20" height="47" fill="url(#rl_zr1)"/>
+            <rect x="50" y="48" width="14" height="37" fill="url(#rl_zr1)" opacity="0.7"/>
+            <!-- Windows -->
+            <rect x="14" y="60" width="4" height="4" fill="rgba(255,255,255,0.3)"/>
+            <rect x="20" y="60" width="4" height="4" fill="rgba(255,255,255,0.3)"/>
+            <rect x="32" y="44" width="4" height="4" fill="rgba(255,255,255,0.4)"/>
+            <rect x="38" y="44" width="4" height="4" fill="rgba(255,255,255,0.4)"/>
+            <rect x="32" y="54" width="4" height="4" fill="rgba(255,255,255,0.3)"/>
+            <rect x="38" y="54" width="4" height="4" fill="rgba(255,255,255,0.3)"/>
+            <line x1="8" y1="85" x2="66" y2="85" stroke="#8ab4f8" stroke-width="1" opacity="0.5"/>
+            <text x="74" y="46" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#8ab4f8" letter-spacing="0.5">ZENITH</text>
+            <text x="74" y="62" font-family="Arial,sans-serif" font-size="8" fill="#666" letter-spacing="3">REALTY</text>
+            <defs>
+              <linearGradient id="rl_zr1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4a8ef5"/><stop offset="100%" stop-color="#1a3a7a"/></linearGradient>
+            </defs>
+          </svg>
+          <span class="reel-logo-name">Zenith Realty</span>
+        </div>
+
+        <!-- 7. Aura Wellness -->
+        <div class="reel-logo-card">
+          <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Concentric circles / aura -->
+            <circle cx="40" cy="50" r="32" stroke="url(#rl_au1)" stroke-width="1" fill="none" opacity="0.3"/>
+            <circle cx="40" cy="50" r="22" stroke="url(#rl_au1)" stroke-width="1.5" fill="none" opacity="0.6"/>
+            <circle cx="40" cy="50" r="12" stroke="url(#rl_au1)" stroke-width="2" fill="none" opacity="0.9"/>
+            <circle cx="40" cy="50" r="4" fill="url(#rl_au1)"/>
+            <text x="80" y="44" font-family="Georgia,serif" font-size="14" font-style="italic" fill="#b8f0d8" letter-spacing="0.5">Aura</text>
+            <text x="80" y="60" font-family="Arial,sans-serif" font-size="8" fill="#888" letter-spacing="3">WELLNESS</text>
+            <defs>
+              <linearGradient id="rl_au1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4affa0"/><stop offset="100%" stop-color="#00c8ff"/></linearGradient>
+            </defs>
+          </svg>
+          <span class="reel-logo-name">Aura Wellness</span>
+        </div>
+
+        <!-- 8. Krafft Studio -->
+        <div class="reel-logo-card">
+          <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Geometric K -->
+            <polygon points="18,15 18,85 30,85 30,56 50,85 64,85 42,50 62,15 48,15 30,44 30,15" fill="url(#rl_ks1)"/>
+            <text x="72" y="44" font-family="Arial,sans-serif" font-size="13" font-weight="900" fill="#ff6b35" letter-spacing="1">KRAFFT</text>
+            <text x="72" y="60" font-family="Arial,sans-serif" font-size="8" fill="#888" letter-spacing="3">STUDIO</text>
+            <defs>
+              <linearGradient id="rl_ks1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff6b35"/><stop offset="100%" stop-color="#ff1744"/></linearGradient>
+            </defs>
+          </svg>
+          <span class="reel-logo-name">Krafft Studio</span>
+        </div>
+
+        <!-- 9. Luminary Edu -->
+        <div class="reel-logo-card">
+          <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Book with light rays -->
+            <path d="M20 30 L20 75 Q36 68 46 75 L46 30 Q36 22 20 30Z" fill="url(#rl_le1)" opacity="0.9"/>
+            <path d="M46 30 L46 75 Q56 68 72 75 L72 30 Q62 22 46 30Z" fill="url(#rl_le2)" opacity="0.7"/>
+            <line x1="46" y1="28" x2="46" y2="12" stroke="#ffd700" stroke-width="1.5"/>
+            <line x1="38" y1="32" x2="30" y2="18" stroke="#ffd700" stroke-width="1" opacity="0.7"/>
+            <line x1="54" y1="32" x2="62" y2="18" stroke="#ffd700" stroke-width="1" opacity="0.7"/>
+            <text x="82" y="42" font-family="Georgia,serif" font-size="12" fill="#ffd700" letter-spacing="0.5">LUMINARY</text>
+            <text x="82" y="58" font-family="Arial,sans-serif" font-size="8" fill="#888" letter-spacing="3">EDUCATION</text>
+            <defs>
+              <linearGradient id="rl_le1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffd700"/><stop offset="100%" stop-color="#ff8c00"/></linearGradient>
+              <linearGradient id="rl_le2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff8c00"/><stop offset="100%" stop-color="#ff4500"/></linearGradient>
+            </defs>
+          </svg>
+          <span class="reel-logo-name">Luminary Edu</span>
+        </div>
+
+        <!-- 10. Vertex Tech -->
+        <div class="reel-logo-card">
+          <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Hexagon tech -->
+            <polygon points="36,12 56,12 66,30 56,48 36,48 26,30" fill="none" stroke="url(#rl_vt1)" stroke-width="2"/>
+            <polygon points="36,20 50,20 57,30 50,40 36,40 29,30" fill="url(#rl_vt1)" opacity="0.2"/>
+            <circle cx="46" cy="30" r="6" fill="url(#rl_vt1)"/>
+            <line x1="46" y1="12" x2="46" y2="6" stroke="url(#rl_vt1)" stroke-width="1.5"/>
+            <line x1="66" y1="30" x2="72" y2="30" stroke="url(#rl_vt1)" stroke-width="1.5"/>
+            <text x="82" y="36" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#a78bfa" letter-spacing="0.5">VERTEX</text>
+            <text x="82" y="52" font-family="Arial,sans-serif" font-size="8" fill="#888" letter-spacing="3">TECH</text>
+            <defs>
+              <linearGradient id="rl_vt1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#6d28d9"/></linearGradient>
+            </defs>
+          </svg>
+          <span class="reel-logo-name">Vertex Tech</span>
+        </div>
+
+        <!-- 11. Soleil Cafe -->
+        <div class="reel-logo-card">
+          <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Sun + coffee cup -->
+            <circle cx="36" cy="38" r="14" fill="url(#rl_sc1)" opacity="0.9"/>
+            <!-- Sun rays -->
+            <line x1="36" y1="18" x2="36" y2="12" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+            <line x1="36" y1="58" x2="36" y2="64" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+            <line x1="16" y1="38" x2="10" y2="38" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+            <line x1="56" y1="38" x2="62" y2="38" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+            <!-- Steam -->
+            <path d="M36 20 Q38 15 36 10" stroke="#fbbf24" stroke-width="1.5" fill="none" opacity="0.5"/>
+            <text x="75" y="40" font-family="Georgia,serif" font-size="15" font-style="italic" fill="#fbbf24" letter-spacing="0.5">Soleil</text>
+            <text x="75" y="58" font-family="Arial,sans-serif" font-size="8" fill="#888" letter-spacing="3">CAFÉ</text>
+            <defs>
+              <linearGradient id="rl_sc1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient>
+            </defs>
+          </svg>
+          <span class="reel-logo-name">Soleil Café</span>
+        </div>
+
+        <!-- 12. Prism Media -->
+        <div class="reel-logo-card">
+          <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Prism triangle with spectrum -->
+            <polygon points="36,15 10,80 62,80" fill="none" stroke="url(#rl_pm1)" stroke-width="2"/>
+            <polygon points="36,25 18,72 54,72" fill="url(#rl_pm1)" opacity="0.15"/>
+            <!-- Spectrum lines emerging -->
+            <line x1="62" y1="80" x2="80" y2="68" stroke="#ff4444" stroke-width="1.5"/>
+            <line x1="62" y1="80" x2="82" y2="76" stroke="#ffaa00" stroke-width="1.5"/>
+            <line x1="62" y1="80" x2="82" y2="84" stroke="#00ff88" stroke-width="1.5"/>
+            <circle cx="36" cy="47" r="3" fill="white" opacity="0.8"/>
+            <text x="90" y="42" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#e879f9" letter-spacing="0.5">PRISM</text>
+            <text x="90" y="58" font-family="Arial,sans-serif" font-size="8" fill="#888" letter-spacing="3">MEDIA</text>
+            <defs>
+              <linearGradient id="rl_pm1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e879f9"/><stop offset="100%" stop-color="#6366f1"/></linearGradient>
+            </defs>
+          </svg>
+          <span class="reel-logo-name">Prism Media</span>
+        </div>
+
+        <!-- Duplicates for seamless loop -->
+        <!-- 1 repeat -->
+        <div class="reel-logo-card">
+          <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(12,8)">
+              <ellipse cx="25" cy="58" rx="22" ry="8" fill="url(#rl_sa3b)" opacity="0.7"/>
+              <path d="M25 55 C17 42 14 28 25 20 C36 28 33 42 25 55Z" fill="url(#rl_sa1b)"/>
+              <path d="M25 55 C15 46 10 32 16 24 C20 32 22 44 25 55Z" fill="url(#rl_sa2b)" opacity="0.8"/>
+              <path d="M25 55 C35 46 40 32 34 24 C30 32 28 44 25 55Z" fill="url(#rl_sa2b)" opacity="0.8"/>
+              <path d="M25 55 C9 47 3 30 10 20 C15 29 20 42 25 55Z" fill="url(#rl_sa2b)" opacity="0.5"/>
+              <path d="M25 55 C41 47 47 30 40 20 C35 29 30 42 25 55Z" fill="url(#rl_sa2b)" opacity="0.5"/>
+            </g>
+            <text x="62" y="44" font-family="Georgia,serif" font-size="13" font-weight="bold" fill="#e8433a" letter-spacing="1">SANSKAR</text>
+            <line x1="62" y1="48" x2="168" y2="48" stroke="#555" stroke-width="0.5"/>
+            <text x="62" y="62" font-family="Georgia,serif" font-size="10" fill="#888" letter-spacing="3">ACADEMY</text>
+            <defs>
+              <linearGradient id="rl_sa1b" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f07030"/><stop offset="100%" stop-color="#d4246e"/></linearGradient>
+              <linearGradient id="rl_sa2b" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e8433a"/><stop offset="100%" stop-color="#d4246e"/></linearGradient>
+              <linearGradient id="rl_sa3b" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d4246e"/><stop offset="100%" stop-color="#e8433a"/></linearGradient>
+            </defs>
+          </svg>
+          <span class="reel-logo-name">Sanskar Academy</span>
+        </div>
+        <div class="reel-logo-card">
+          <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(10,12)">
+              <rect x="0" y="0" width="13" height="13" rx="2" fill="url(#rl_aw1b)"/>
+              <rect x="16" y="0" width="13" height="13" rx="2" fill="url(#rl_aw1b)" opacity="0.8"/>
+              <rect x="32" y="0" width="13" height="13" rx="2" fill="url(#rl_aw1b)" opacity="0.6"/>
+              <rect x="0" y="16" width="13" height="13" rx="2" fill="url(#rl_aw1b)" opacity="0.8"/>
+              <rect x="16" y="16" width="13" height="13" rx="2" fill="#fff" opacity="0.9"/>
+              <rect x="32" y="16" width="13" height="13" rx="2" fill="url(#rl_aw1b)" opacity="0.8"/>
+              <rect x="0" y="32" width="13" height="13" rx="2" fill="url(#rl_aw1b)" opacity="0.6"/>
+              <rect x="16" y="32" width="13" height="13" rx="2" fill="url(#rl_aw1b)" opacity="0.8"/>
+              <rect x="32" y="32" width="13" height="13" rx="2" fill="url(#rl_aw1b)"/>
+            </g>
+            <text x="62" y="38" font-family="Georgia,serif" font-size="12" font-weight="bold" fill="#f5c842" letter-spacing="0.5">AMERVAN</text>
+            <line x1="62" y1="44" x2="168" y2="44" stroke="#f5c842" stroke-width="0.4" opacity="0.5"/>
+            <text x="62" y="58" font-family="Arial,sans-serif" font-size="9" fill="#c8a030" letter-spacing="3">WAFFLE</text>
+            <text x="62" y="70" font-family="Arial,sans-serif" font-size="7" fill="#666" letter-spacing="2">HOUSE</text>
+            <defs><linearGradient id="rl_aw1b" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f5c842"/><stop offset="100%" stop-color="#c8821a"/></linearGradient></defs>
+          </svg>
+          <span class="reel-logo-name">Amervan Waffle</span>
+        </div>
+        <div class="reel-logo-card">
+          <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="50,15 38,52 48,52 36,85 62,42 50,42" fill="url(#rl_nf1b)"/>
+            <text x="72" y="42" font-family="Arial,sans-serif" font-size="15" font-weight="900" fill="#00e5ff" letter-spacing="-0.5">NOVA</text>
+            <text x="72" y="60" font-family="Arial,sans-serif" font-size="9" fill="#888" letter-spacing="4">FITNESS</text>
+            <line x1="72" y1="45" x2="162" y2="45" stroke="#00e5ff" stroke-width="0.5" opacity="0.4"/>
+            <defs><linearGradient id="rl_nf1b" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00e5ff"/><stop offset="100%" stop-color="#0072ff"/></linearGradient></defs>
+          </svg>
+          <span class="reel-logo-name">Nova Fitness</span>
+        </div>
+        <div class="reel-logo-card">
+          <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="40" cy="50" r="32" stroke="url(#rl_au1b)" stroke-width="1" fill="none" opacity="0.3"/>
+            <circle cx="40" cy="50" r="22" stroke="url(#rl_au1b)" stroke-width="1.5" fill="none" opacity="0.6"/>
+            <circle cx="40" cy="50" r="12" stroke="url(#rl_au1b)" stroke-width="2" fill="none" opacity="0.9"/>
+            <circle cx="40" cy="50" r="4" fill="url(#rl_au1b)"/>
+            <text x="80" y="44" font-family="Georgia,serif" font-size="14" font-style="italic" fill="#b8f0d8" letter-spacing="0.5">Aura</text>
+            <text x="80" y="60" font-family="Arial,sans-serif" font-size="8" fill="#888" letter-spacing="3">WELLNESS</text>
+            <defs><linearGradient id="rl_au1b" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4affa0"/><stop offset="100%" stop-color="#00c8ff"/></linearGradient></defs>
+          </svg>
+          <span class="reel-logo-name">Aura Wellness</span>
+        </div>
+        <div class="reel-logo-card">
+          <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="36,12 56,12 66,30 56,48 36,48 26,30" fill="none" stroke="url(#rl_vt1b)" stroke-width="2"/>
+            <polygon points="36,20 50,20 57,30 50,40 36,40 29,30" fill="url(#rl_vt1b)" opacity="0.2"/>
+            <circle cx="46" cy="30" r="6" fill="url(#rl_vt1b)"/>
+            <text x="82" y="36" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#a78bfa" letter-spacing="0.5">VERTEX</text>
+            <text x="82" y="52" font-family="Arial,sans-serif" font-size="8" fill="#888" letter-spacing="3">TECH</text>
+            <defs><linearGradient id="rl_vt1b" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#6d28d9"/></linearGradient></defs>
+          </svg>
+          <span class="reel-logo-name">Vertex Tech</span>
+        </div>
+        <div class="reel-logo-card">
+          <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="36,15 10,80 62,80" fill="none" stroke="url(#rl_pm1b)" stroke-width="2"/>
+            <polygon points="36,25 18,72 54,72" fill="url(#rl_pm1b)" opacity="0.15"/>
+            <line x1="62" y1="80" x2="80" y2="68" stroke="#ff4444" stroke-width="1.5"/>
+            <line x1="62" y1="80" x2="82" y2="76" stroke="#ffaa00" stroke-width="1.5"/>
+            <line x1="62" y1="80" x2="82" y2="84" stroke="#00ff88" stroke-width="1.5"/>
+            <circle cx="36" cy="47" r="3" fill="white" opacity="0.8"/>
+            <text x="90" y="42" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#e879f9" letter-spacing="0.5">PRISM</text>
+            <text x="90" y="58" font-family="Arial,sans-serif" font-size="8" fill="#888" letter-spacing="3">MEDIA</text>
+            <defs><linearGradient id="rl_pm1b" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e879f9"/><stop offset="100%" stop-color="#6366f1"/></linearGradient></defs>
+          </svg>
+          <span class="reel-logo-name">Prism Media</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Film strip bottom border -->
+  <div class="film-strip-border bottom">
+    <div class="film-holes">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="section-eyebrow reveal">How We Work</div>
+  <h2 class="section-title reveal">Our <em>Process</em></h2>
+
+  <div class="process-steps">
+    <div class="process-step reveal">
+      <div class="step-num">01</div>
+      <h3 class="step-title">Discovery</h3>
+      <p class="step-desc">We deep-dive into your brand, audience, and goals to understand what makes you unique in the market.</p>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-num">02</div>
+      <h3 class="step-title">Strategy</h3>
+      <p class="step-desc">A custom growth roadmap is built — covering content, brand identity, monetization, and digital expansion.</p>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-num">03</div>
+      <h3 class="step-title">Execution</h3>
+      <p class="step-desc">We create, design, and manage everything with precision — from logos to websites to content calendars.</p>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-num">04</div>
+      <h3 class="step-title">Scale</h3>
+      <p class="step-desc">With data-driven insights we continuously optimize, helping you grow faster and reach further every month.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS MARQUEE -->
+<section class="results" id="results">
+  <div class="section-eyebrow reveal">Impact & Results</div>
+  <h2 class="section-title reveal">Numbers That <em>Matter</em></h2>
+
+  <div class="results-marquee-wrapper">
+    <div class="results-marquee">
+      <!-- Repeated for seamless loop -->
+      <div class="result-pill">
+        <div class="result-pill-num">100+</div>
+        <div class="result-pill-text">YouTube creators scaled & managed</div>
+      </div>
+      <div class="result-pill">
+        <div class="result-pill-num">250+</div>
+        <div class="result-pill-text">Campaigns successfully delivered</div>
+      </div>
+      <div class="result-pill">
+        <div class="result-pill-num">100%</div>
+        <div class="result-pill-text">Brand identity projects delivered on time</div>
+      </div>
+      <div class="result-pill">
+        <div class="result-pill-num">10+</div>
+        <div class="result-pill-text">Brands served with digital solutions</div>
+      </div>
+      <div class="result-pill">
+        <div class="result-pill-num">3</div>
+        <div class="result-pill-text">Websites designed and launched</div>
+      </div>
+      <div class="result-pill">
+        <div class="result-pill-num">∞</div>
+        <div class="result-pill-text">Growth potential unlocked for creators</div>
+      </div>
+      <!-- Duplicate for seamless scroll -->
+      <div class="result-pill">
+        <div class="result-pill-num">100+</div>
+        <div class="result-pill-text">YouTube creators scaled & managed</div>
+      </div>
+      <div class="result-pill">
+        <div class="result-pill-num">250+</div>
+        <div class="result-pill-text">Campaigns successfully delivered</div>
+      </div>
+      <div class="result-pill">
+        <div class="result-pill-num">100%</div>
+        <div class="result-pill-text">Brand identity projects delivered on time</div>
+      </div>
+      <div class="result-pill">
+        <div class="result-pill-num">10+</div>
+        <div class="result-pill-text">Brands served with digital solutions</div>
+      </div>
+      <div class="result-pill">
+        <div class="result-pill-num">3</div>
+        <div class="result-pill-text">Websites designed and launched</div>
+      </div>
+      <div class="result-pill">
+        <div class="result-pill-num">∞</div>
+        <div class="result-pill-text">Growth potential unlocked for creators</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why">
+  <div class="section-eyebrow reveal">Why Choose Us</div>
+
+  <div class="why-grid">
+    <div class="why-features">
+      <h2 class="section-title reveal">We're Your <em>Digital</em> Partner, Not Just a Vendor</h2>
+
+      <div class="why-feature reveal">
+        <div class="why-feature-icon">🧠</div>
+        <div class="why-feature-text">
+          <h4>Creator-First Mindset</h4>
+          <p>We understand the creator economy deeply. Our strategies are built around authentic growth, not short-term tricks.</p>
+        </div>
+      </div>
+
+      <div class="why-feature reveal">
+        <div class="why-feature-icon">🎨</div>
+        <div class="why-feature-text">
+          <h4>Design Excellence</h4>
+          <p>Every logo, website, and visual asset we create is crafted to world-class standards that make brands unforgettable.</p>
+        </div>
+      </div>
+
+      <div class="why-feature reveal">
+        <div class="why-feature-icon">📊</div>
+        <div class="why-feature-text">
+          <h4>Data-Driven Strategy</h4>
+          <p>We combine creative intuition with analytics to make decisions that actually move the needle for creators and brands alike.</p>
+        </div>
+      </div>
+
+      <div class="why-feature reveal">
+        <div class="why-feature-icon">🤝</div>
+        <div class="why-feature-text">
+          <h4>Full-Service Partnership</h4>
+          <p>From a single logo to a complete digital ecosystem — we scale with your needs and stay invested in your long-term success.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="why-visual reveal">
+      <div class="why-big-stat">
+        <div class="why-big-num">360°</div>
+        <div class="why-big-label">Complete Digital Management<br><span style="font-size:13px; color: var(--text-muted);">For Creators & Brands</span></div>
+      </div>
+      <div class="why-secondary-stats">
+        <div class="why-sec-stat">
+          <div class="why-sec-num">🎯</div>
+          <div class="why-sec-label">Targeted Strategy</div>
+        </div>
+        <div class="why-sec-stat">
+          <div class="why-sec-num">⚡</div>
+          <div class="why-sec-label">Fast Execution</div>
+        </div>
+        <div class="why-sec-stat">
+          <div class="why-sec-num">📈</div>
+          <div class="why-sec-label">Proven Growth</div>
+        </div>
+        <div class="why-sec-stat">
+          <div class="why-sec-num">💎</div>
+          <div class="why-sec-label">Premium Quality</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="section-eyebrow">Get In Touch</div>
+  <h2 class="section-title">Ready to <em>Grow</em>?</h2>
+  <p class="cta-desc">
+    Whether you're a creator ready to scale, or a brand looking for a complete digital transformation — let's build something extraordinary together.
+  </p>
+
+  <div class="cta-buttons">
+    <a href="https://wa.me/919171015581?text=Hi%20Venus%20Media!%20I%27d%20like%20to%20book%20a%20consultation." target="_blank" class="btn-primary btn-whatsapp">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;margin-right:8px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.549 4.103 1.51 5.83L0 24l6.335-1.654A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.371l-.36-.214-3.724.972.993-3.62-.235-.373A9.818 9.818 0 0112 2.182c5.42 0 9.818 4.398 9.818 9.818 0 5.42-4.398 9.818-9.818 9.818z"/></svg>
+      Chat on WhatsApp
+    </a>
+    <a href="tel:+919171015581" class="btn-secondary btn-call">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;margin-right:8px;"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+      Call Us Now
+    </a>
+  </div>
+
+  <p class="cta-contact-note">📲 +91 91710 15581 &nbsp;·&nbsp; Available on WhatsApp & Call</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo-text" style="font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; color: var(--white);">Venus <span style="color: var(--lotus-red);">Media</span></div>
+      <p>India's premier digital growth studio for YouTube creators and brands. We manage, design, and scale — so you can focus on what you love.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Creator Management</a></li>
+        <li><a href="#">Content Strategy</a></li>
+        <li><a href="#">Web Design</a></li>
+        <li><a href="#">Logo Design</a></li>
+        <li><a href="#">Brand Identity</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Creators</h4>
+      <ul>
+        <li><a href="https://youtube.com/@artistshintumourya" target="_blank">Hintu Mourya</a></li>
+        <li><a href="https://youtube.com/@akashpatel0712" target="_blank">Akash Patel</a></li>
+        <li><a href="https://youtube.com/@mehaklalwaniii" target="_blank">Mehak Lalwani</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Brands</h4>
+      <ul>
+        <li><a href="#">Sanskar Academy</a></li>
+        <li><a href="#">Amervan Waffle</a></li>
+        <li><a href="#">Dholpur</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Venus Media. All rights reserved.</p>
+    <p>Built with <span>♥</span> for creators & brands.</p>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Custom Cursor
+  const cursor = document.getElementById('cursor');
+  const cursorRing = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.left = mouseX - 5 + 'px';
+    cursor.style.top = mouseY - 5 + 'px';
+  });
+
+  function animateRing() {
+    ringX += (mouseX - ringX - 18) * 0.12;
+    ringY += (mouseY - ringY - 18) * 0.12;
+    cursorRing.style.left = ringX + 'px';
+    cursorRing.style.top = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'scale(2.5)';
+      cursorRing.style.width = '60px';
+      cursorRing.style.height = '60px';
+      cursorRing.style.opacity = '0.3';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'scale(1)';
+      cursorRing.style.width = '36px';
+      cursorRing.style.height = '36px';
+      cursorRing.style.opacity = '1';
+    });
+  });
+
+  // Scroll Reveal
+  const reveals = document.querySelectorAll('.reveal');
+  
+  // First hide them all
+  reveals.forEach(el => el.classList.add('hidden'));
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.remove('hidden');
+          entry.target.classList.add('visible');
+        }, 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Add stagger to sibling reveals
+  document.querySelectorAll('.creators-grid, .brands-grid, .service-cards, .why-features, .process-steps').forEach(container => {
+    const children = container.query
